@@ -1,6 +1,6 @@
 import { Admin } from './api/admin';
 import { Appointment } from './api/appointment';
-import { authenticate } from './api/auth';
+import { authenticate, LoginPayload } from './api/auth';
 import { Brand } from './api/brand';
 import { Car, CarImage, CarType } from './api/car';
 
@@ -12,8 +12,8 @@ class ApiProvider {
   public readonly carImage: CarImage = new CarImage();
   public readonly carType: CarType = new CarType();
 
-  async authenticate(token: string) {
-    const value = await authenticate(token);
+  async authenticate(data: LoginPayload) {
+    const value = await authenticate(data);
     this.admin.authenticate(value);
   }
 }
