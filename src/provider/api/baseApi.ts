@@ -8,7 +8,7 @@ export class BaseApi<
   Create = unknown,
   Update = Partial<Create>,
 > {
-  protected constructor(protected readonly resource_name: string) {
+  constructor(protected readonly resource_name: string) {
     this.resource_name = '/' + resource_name;
   }
 
