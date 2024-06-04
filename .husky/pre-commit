@@ -1,1 +1,1 @@
-bun format
+npx lint-staged
