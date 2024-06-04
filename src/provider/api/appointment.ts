@@ -20,7 +20,10 @@ export interface AppointmentData {
   adminId: string;
 }
 
-export type AppointmentCreatePayload = Omit<AppointmentData, 'adminId' | 'id'>;
+export type AppointmentCreatePayload = Omit<
+  AppointmentData,
+  'adminId' | 'id' | 'status'
+>;
 
 export class Appointment extends BaseApi<
   AppointmentData['id'],
