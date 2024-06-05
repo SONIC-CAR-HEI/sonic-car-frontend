@@ -1,0 +1,37 @@
+'use client';
+import { DashHorizon } from '@/src/assets/fonts/dash-horizon';
+import { BrandData } from '@/src/provider/api/brand';
+import { useQuery } from 'react-query';
+import { apiProvider } from '@/src/provider/api-provider';
+
+interface Props {
+  onSelect(value: BrandData): void;
+}
+
+export const BrandList = ({ onSelect }: Props) => {
+  const { data } = useQuery({
+    queryKey: ['list-of-brands'],
+    queryFn: () => apiProvider.brand.all(),
+  });
+
+  return (
+    <div className="flex items-center gap-4">
+      {data?.map((v) => (
+        <div
+          onClick={() => onSelect(v)}
+          className="py-1 px-3 flex flex-col gap-1 items-center justify-center hover:scale-110"
+        >
+          <img
+            alt="logo"
+            src={v.logoUrl as string}
+            draggable={false}
+            className="w-[3rem] h-[3rem] object-cover"
+          />
+          <span className={DashHorizon.className + ' text-lg font-semibold'}>
+            {v.name}
+          </span>
+        </div>
+      ))}
+    </div>
+  );
+};
