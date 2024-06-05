@@ -1,3 +1,4 @@
+import { apiProvider } from '@/src/provider/api-provider';
 import { ChangeEvent, ChangeEventHandler, useEffect, useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 import { BrandData } from '@/src/provider/api/brand';
@@ -29,7 +30,7 @@ export const useSearch = (initialData?: CarData[]): SearchHookValue => {
   const [result, setResult] = useState(initialData || []);
 
   const performSearch = (params: Partial<Params>) => {
-    setResult([]);
+    apiProvider.car.search(params).then((v) => setResult(v));
   };
 
   const lookup = <T extends keyof Params>(key: T, value: Params[T]) => {

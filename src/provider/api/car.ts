@@ -21,9 +21,23 @@ export interface CarData {
 
 export type CarCreatePayload = Omit<CarData, 'id'>;
 
+interface ParamSearch {
+  query?: string;
+  minPrice?: number;
+  maxPrice?: number;
+  motor?: string;
+  type?: string;
+  brand?: string;
+}
+
 export class Car extends BaseApi<CarData['id'], CarData, CarCreatePayload> {
   constructor() {
     super('car');
+  }
+
+  async search(params: ParamSearch): Promise<CarData[]> {
+    const queries = new URLSearchParams(params as Record<string, string>);
+    return (await apiClient.get('/search?' + queries.toString())).data;
   }
 }
 
