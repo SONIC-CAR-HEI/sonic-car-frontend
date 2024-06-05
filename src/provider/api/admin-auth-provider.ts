@@ -1,9 +1,12 @@
 import { AuthProvider } from 'react-admin';
-import { apiClient } from './client';
+import { apiClient } from '../client';
 
 export const authProvider: AuthProvider = {
   login: async ({ username, password }) => {
-    const res = await apiClient.post('/auth/login', { username, password });
+    const res = await apiClient.post('/auth/login', {
+      email: username,
+      password,
+    });
     if (res.data.token) {
       localStorage.setItem('token', res.data.token);
       return Promise.resolve();
