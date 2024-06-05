@@ -6,6 +6,6 @@ export interface LoginPayload {
 }
 
 export const authenticate = async (data: LoginPayload): Promise<string> => {
-  const response = await apiClient.post('/auth/login', data,);
+  const response = await apiClient.post('/auth/login', data);
   return response.data.token;
 };

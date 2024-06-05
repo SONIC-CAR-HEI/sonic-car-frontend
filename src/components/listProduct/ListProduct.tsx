@@ -26,4 +26,3 @@ export const CarList: React.FC<Omit<ListProps, 'children'>> = (props) => (
     </Box>
   </List>
 );
-

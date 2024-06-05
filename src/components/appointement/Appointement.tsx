@@ -26,4 +26,3 @@ export const Appointment: React.FC<Omit<ListProps, 'children'>> = (props) => (
     </Box>
   </List>
 );
-

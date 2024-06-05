@@ -86,4 +86,3 @@ export const SoAppBar = () => {
 };
 
 export default SoAppBar;
-
