@@ -1,3 +1,5 @@
+import { apiClient } from '@/src/provider/client';
+
 export const contact = async <T>(data: T) => {
-  throw new Error('contact not implemented');
+  return (await apiClient.post('/contact', data)).data;
 };
