@@ -1,4 +1,5 @@
 'use client';
+import { dataProvider } from 'provider/api/admin-data-provider';
 import {
   Layout,
   Admin,
@@ -12,11 +13,8 @@ import {
   LayoutComponent,
 } from 'react-admin';
 import { Event } from '@mui/icons-material';
-import jsonServerProvider from 'ra-data-json-server';
 import { SoLayout } from '../../layouts/Layouts';
 import { CarList } from 'components/listProduct/ListProduct';
-
-const dataProvider = jsonServerProvider('https://jsonplaceholder.typicode.com');
 
 function MyListComponent() {
   return (
