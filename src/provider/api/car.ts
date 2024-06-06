@@ -37,7 +37,9 @@ export class Car extends BaseApi<CarData['id'], CarData, CarCreatePayload> {
 
   async search(params: ParamSearch): Promise<CarData[]> {
     const queries = new URLSearchParams(params as Record<string, string>);
-    return (await apiClient.get('/search?' + queries.toString())).data;
+    return (
+      await apiClient.get(this.resource_name + '/search?' + queries.toString())
+    ).data;
   }
 }
 
