@@ -22,38 +22,39 @@ export const CardCar = ({ car = {} as CarData }: Props) => {
   });
 
   return (
-    <div className="rounded-xl bg-zinc-800 overflow-hidden group shadow-lg">
+    <div className="rounded-xl bg-zinc-800 overflow-hidden group shadow-lg p-3">
       <div className="w-full overflow-hidden rounded-lg">
         <img
           alt=""
-          src={image.imageUrl}
-          className="w-full group-hover:scale-110 transition-transform aspect-[3/2] object-cover"
+          src={image?.imageUrl}
+          className="w-full group-hover:scale-110 rounded-lg transition-transform aspect-[3/2] object-cover"
         />
       </div>
-      <div className="py-3 px-2">
-        <div className="w-full flex items-center justify-between">
+      <div className="mt-3">
+        <div className="w-full flex items-center justify-between text-white">
           <h2
-            className={'text-xl font-bold text-red-600 ' + montserrat.className}
+            className={'text-xl font-bold line-clamp-1 ' + montserrat.className}
           >
             {car.name}
           </h2>
           <Chip
             label={(car.price || 0) + ' Ar'}
-            className="font-semibold text-orange-500"
+            className="font-semibold text-white"
           />
         </div>
         <div className="text-white">
-          <span className="text-sm font-semibold">
+          <span className="text-sm font-semibold text-zinc-300">
             {car.model}, {car.engineType}
           </span>
-          <p>{car.description}</p>
+          <p className="line-clamp-2 text-zinc-400">{car.description}</p>
         </div>
 
-        <div className="pt-2 flex items-center gap-4 justify-end text-orange-500">
+        <div className="pt-2 flex items-center text-gray-800 gap-4 justify-end">
           <Button
             size="small"
             color="inherit"
-            variant="outlined"
+            variant="contained"
+            className="text-black font-semibold"
             component={Link}
             href={'/car/' + car.id}
             startIcon={<Info />}
@@ -64,9 +65,8 @@ export const CardCar = ({ car = {} as CarData }: Props) => {
             <Button
               size="small"
               variant="contained"
-              color="warning"
               sx={{
-                background: 'rgb(249 115 22)',
+                background: 'rgb(31 41 55)',
                 color: 'white',
               }}
               startIcon={<ShoppingCart />}

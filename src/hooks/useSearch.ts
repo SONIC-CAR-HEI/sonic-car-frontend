@@ -28,14 +28,27 @@ interface Params {
 export const useSearch = (initialData?: CarData[]): SearchHookValue => {
   const [, setQuery] = useState<Params>({} as Params);
   const [result, setResult] = useState(initialData || []);
+  useEffect(() => {
+    if (initialData && initialData?.length > 0) {
+      setResult(initialData);
+    }
+  }, [initialData]);
 
   const performSearch = (params: Partial<Params>) => {
     apiProvider.car.search(params).then((v) => setResult(v));
   };
 
-  const lookup = <T extends keyof Params>(key: T, value: Params[T]) => {
+  const lookup = <T extends keyof Params>(
+    key: T,
+    value: Params[T],
+    removeBrand = true,
+  ) => {
     setQuery((p) => {
-      const obj: Params = { ...p };
+      let obj: Params = { ...p };
+      if (removeBrand) {
+        const { brand, ...r } = obj;
+        obj = r as Params;
+      }
       obj[key] = value;
       performSearch(obj);
       return obj;
@@ -54,10 +67,16 @@ export const useSearch = (initialData?: CarData[]): SearchHookValue => {
     handleQuery: debounced,
     result,
     handleMaxPrice(e) {
-      lookup('maxPrice', e.target.valueAsNumber);
+      const value = parseFloat(e.target.value);
+      if (!Number.isNaN(value)) {
+        lookup('minPrice', value);
+      }
     },
     handleMinPrice(e) {
-      lookup('minPrice', e.target.valueAsNumber);
+      const value = parseFloat(e.target.value);
+      if (!Number.isNaN(value)) {
+        lookup('minPrice', value);
+      }
     },
     handleTypeSelect(value: string) {
       lookup('type', value);
@@ -66,7 +85,7 @@ export const useSearch = (initialData?: CarData[]): SearchHookValue => {
       lookup('motor', value);
     },
     handleSelectBrand(value: BrandData) {
-      lookup('brand', value.id);
+      lookup('brand', value.id, false);
     },
     reset(data?: CarData[]) {
       setQuery({} as Params);

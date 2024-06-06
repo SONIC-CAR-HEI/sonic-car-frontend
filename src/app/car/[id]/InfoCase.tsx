@@ -26,7 +26,7 @@ export const InfoCase = ({ data }: Props) => {
         </div>
         <div className="flex flex-col gap-2">
           <p className="text-lg">
-            Model ${data?.carData.model} ({data?.type.name})
+            Model {data?.carData.model} ({data?.type.name})
           </p>
           <div className="flex items-center gap-2">
             <img
@@ -37,7 +37,7 @@ export const InfoCase = ({ data }: Props) => {
             <span className="text-lg font-semibold">{data?.brand.name}</span>
           </div>
           <p className="text-lg">With motor {data?.carData.engineType}</p>
-          <p className="text-lg">And a power of {data?.carData.engineType}</p>
+          <p className="text-lg">And a power of {data?.carData.power}</p>
           <p className="text-lg">It has {data?.carData.placeNumber} seats</p>
           <p className="text-lg">{data?.carData?.description}</p>
         </div>

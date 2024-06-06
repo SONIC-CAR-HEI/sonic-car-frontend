@@ -1,23 +1,18 @@
-import { DashHorizon } from '@/src/assets/fonts/dash-horizon';
-import Img from 'next/image';
+import { Syne } from 'next/font/google';
 import Link from 'next/link';
+
+const logoFont = Syne({
+  subsets: ['latin'],
+  weight: '800',
+});
 
 export const AppLogo = () => {
   return (
-    <Link href="/" className="flex items-center gap-2">
-      <Img
-        src="/car-logo.png"
-        alt=""
-        width="277"
-        height="277"
-        className="w-16 h-16"
-      />
+    <Link href="/" className="flex items-center gap-2 py-3">
       <span
-        className={
-          DashHorizon.className + ' font-extrabold text-4xl select-none'
-        }
+        className={logoFont.className + ' font-extrabold text-2xl select-none'}
       >
-        Car Dealer
+        CarDealer
       </span>
     </Link>
   );

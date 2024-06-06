@@ -1,8 +1,13 @@
 'use client';
-import { DashHorizon } from '@/src/assets/fonts/dash-horizon';
 import { BrandData } from '@/src/provider/api/brand';
+import { Syne } from 'next/font/google';
 import { useQuery } from 'react-query';
 import { apiProvider } from '@/src/provider/api-provider';
+
+const fontStyle = Syne({
+  subsets: ['latin'],
+  weight: 'variable',
+});
 
 interface Props {
   onSelect(value: BrandData): void;
@@ -26,9 +31,9 @@ export const BrandList = ({ onSelect }: Props) => {
             alt="logo"
             src={v.logoUrl as string}
             draggable={false}
-            className="w-[3rem] h-[3rem] object-cover"
+            className="h-[3rem] object-fit"
           />
-          <span className={DashHorizon.className + ' text-lg font-semibold'}>
+          <span className={fontStyle.className + ' text-[1rem] font-extrabold'}>
             {v.name}
           </span>
         </div>

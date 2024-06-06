@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { Button } from '@mui/material';
 import { useQuery } from 'react-query';
-import { Montserrat, Poppins, Quicksand } from 'next/font/google';
+import { Montserrat, Poppins, Quicksand, Syne } from 'next/font/google';
 import { DashHorizon } from '@/src/assets/fonts/dash-horizon';
 import { apiProvider } from '@/src/provider/api-provider';
 import { CarData } from '@/src/provider/api/car';
@@ -12,6 +12,10 @@ const carNameFont = Poppins({
   subsets: ['latin'],
   weight: '700',
   fallback: ['sans-serif'],
+});
+const brandFont = Syne({
+  subsets: ['latin'],
+  weight: '800',
 });
 const modelNameFont = Quicksand({ subsets: ['latin'] });
 const descriptionFont = Montserrat({ subsets: ['latin'] });
@@ -36,7 +40,7 @@ export const CarItem = ({ data, isCurrent }: Props) => {
   return (
     <div className="flex relative">
       <img
-        src={image.imageUrl}
+        src={image?.imageUrl}
         alt=""
         className="w-full h-[35rem] object-cover"
       />
@@ -46,14 +50,14 @@ export const CarItem = ({ data, isCurrent }: Props) => {
             <img
               alt=""
               src={brand?.logoUrl as string}
-              className="w-[3rem] h-[3rem] object-cover"
+              className="w-[3rem] h-[3rem] object-fit"
             />
-            <span className={DashHorizon.className + ' font-semibold text-3xl'}>
+            <span className={brandFont.className + ' font-extrabold text-3xl'}>
               {brand?.name}
             </span>
           </div>
 
-          <div className="absolute bottom-[1rem] left-[4rem]">
+          <div className="absolute bottom-[1rem] left-[4rem] backdrop-blur-md p-5 rounded-2xl">
             <div className="flex items-end gap-2">
               <h2 className={'text-5xl font-bold ' + carNameFont.className}>
                 {data.name}
@@ -68,24 +72,26 @@ export const CarItem = ({ data, isCurrent }: Props) => {
                 modelNameFont.className
               }
             >
-              model, {data.model}
+              {data.model}
             </h3>
-            <p className={'text-xl ' + descriptionFont.className}>
-              {data.description}
-            </p>
           </div>
         </div>
-        <div className="flex items-center justify-center pb-3 gap-4">
+        <div className="flex items-center justify-center pb-3 gap-4 mb-8">
           <Button
             component={Link}
             href={'/car/' + data.id}
             variant="outlined"
             color="inherit"
+            className="backdrop-blur-2xl"
           >
-            <span className="text-black">More info</span>
+            <span className="font-bold">More info</span>
           </Button>
           <AppointmentModal carId={data.id}>
-            <Button variant="contained" color="inherit">
+            <Button
+              variant="contained"
+              className="backdrop-blur-2xl"
+              color="inherit"
+            >
               <span className="text-black">Buy this one</span>
             </Button>
           </AppointmentModal>

@@ -14,7 +14,7 @@ interface Props {
 }
 
 export default function CarInfoPage({ params: { id } }: Props) {
-  const { data } = useQuery({
+  const { data, isError, isLoading } = useQuery({
     queryKey: ['get-car-info', id],
     queryFn: async () => {
       const carData = await apiProvider.car.get(id);
@@ -25,7 +25,7 @@ export default function CarInfoPage({ params: { id } }: Props) {
     },
   });
 
-  if (!data) return notFound();
+  if (isError || (!isLoading && !data)) return notFound();
 
   return (
     <div className="w-full h-screen flex flex-col">

@@ -24,7 +24,7 @@ export const SearchSection = () => {
       <div className="h-0 w-full flex items-center justify-center">
         <SearchBar hook={search} />
       </div>
-      <div className="flex flex-col items-center justify-center mt-16">
+      <div className="flex flex-col items-center gap-4 justify-center mt-16">
         <h2 className={poppins.className + ' text-2xl font-extrabold'}>
           Our brands associated
         </h2>

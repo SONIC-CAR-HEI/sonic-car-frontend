@@ -57,21 +57,12 @@ export const SearchBar = ({ hook }: Props) => {
             <MenuItem value="">None</MenuItem>
             <MenuItem value="HYBRID">Hybrid</MenuItem>
             <MenuItem value="DIESEL">Diesel</MenuItem>
-            <MenuItem value="ELECTRIC">Electron</MenuItem>
+            <MenuItem value="ELECTRIC">Electric</MenuItem>
             <MenuItem value="GASOLINE">Gasoline</MenuItem>
           </Select>
         </FormControl>
 
-        <FormControl sx={{ minWidth: '6rem' }} size="small" variant="standard">
-          <InputLabel id="select-type">Type</InputLabel>
-          <Select
-            label="Type"
-            labelId="select-type"
-            onChange={(v) => hook.handleTypeSelect(v.target.value as string)}
-          >
-            <CarTypeOptions />
-          </Select>
-        </FormControl>
+        <CarTypeOptions hook={hook} />
       </ThemeProvider>
     </div>
   );

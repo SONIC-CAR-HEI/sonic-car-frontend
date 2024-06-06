@@ -9,7 +9,8 @@ interface Props {
 export const ImageData = ({ id }: Props) => {
   const { data } = useQuery({
     queryKey: ['get-car-images', id],
-    queryFn: () => apiProvider.carImage.getCarImagesUrl(id),
+    queryFn: () =>
+      apiProvider.carImage.getCarImagesUrl(id).then((v) => v.slice(0, 3)),
   });
   const [images, setImages] = useState(data || []);
 

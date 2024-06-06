@@ -17,7 +17,7 @@ export const CarCarousel = () => {
   const settings: Settings = {
     infinite: true,
     lazyLoad: 'anticipated',
-    speed: 300,
+    speed: 600,
     autoplay: true,
     slidesToShow: 1,
     centerMode: true,
