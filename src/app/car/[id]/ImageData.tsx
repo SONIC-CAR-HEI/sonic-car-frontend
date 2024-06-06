@@ -1,7 +1,17 @@
+import { apiProvider } from '@/src/provider/api-provider';
 import { useState } from 'react';
+import { useQuery } from 'react-query';
 
-export const ImageData = () => {
-  const [images, setImages] = useState(['1', '2', '3', '4']);
+interface Props {
+  id: string;
+}
+
+export const ImageData = ({ id }: Props) => {
+  const { data } = useQuery({
+    queryKey: ['get-car-images', id],
+    queryFn: () => apiProvider.carImage.getCarImagesUrl(id),
+  });
+  const [images, setImages] = useState(data || []);
 
   const swapOnClick = (index: number) => {
     return () => {
@@ -17,7 +27,11 @@ export const ImageData = () => {
   return (
     <div className="w-full p-3 flex flex-col gap-3">
       <div className="w-full aspect-video bg-zinc-800 rounded-xl overflow-hidden">
-        <img src={images[0]} alt="" className="w-full h-full object-cover" />
+        <img
+          src={images[0]?.imageUrl}
+          alt=""
+          className="w-full h-full object-cover"
+        />
       </div>
       <div className="w-full flex items-center gap-3">
         {images.slice(1).map((src, i) => (
@@ -26,7 +40,11 @@ export const ImageData = () => {
             onClick={swapOnClick(i + 1)}
             className="w-full aspect-video bg-zinc-400 rounded-lg overflow-hidden transition-transform hover:scale-[1.04]"
           >
-            <img src={src} alt="" className="w-full h-full object-cover" />
+            <img
+              src={src.imageUrl}
+              alt=""
+              className="w-full h-full object-cover"
+            />
           </div>
         ))}
       </div>

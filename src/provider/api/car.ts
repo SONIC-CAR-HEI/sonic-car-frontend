@@ -94,7 +94,7 @@ export class CarImage extends BaseApi<
     throw new Error('not implemented');
   }
 
-  async getCarImagesUrl(carId: CarData['id']): Promise<string[]> {
+  async getCarImagesUrl(carId: CarData['id']): Promise<CarImageData[]> {
     return (await apiClient.get(this.resource_name + '/' + carId)).data;
   }
 }

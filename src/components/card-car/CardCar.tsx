@@ -26,7 +26,7 @@ export const CardCar = ({ car = {} as CarData }: Props) => {
       <div className="w-full overflow-hidden rounded-lg">
         <img
           alt=""
-          src={image}
+          src={image.imageUrl}
           className="w-full group-hover:scale-110 transition-transform aspect-[3/2] object-cover"
         />
       </div>

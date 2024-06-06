@@ -1,12 +1,12 @@
 import { BrandData } from '@/src/provider/api/brand';
 import { Button, Chip } from '@mui/material';
-import { CarData, CarTypeData } from '@/src/provider/api/car';
+import { CarData, CarImageData, CarTypeData } from '@/src/provider/api/car';
 import { AppointmentModal } from '@/src/components/appointment-modal';
 
 interface Props {
   data?: {
     carData: CarData;
-    carImages: string[];
+    carImages: CarImageData[];
     brand: BrandData;
     type: CarTypeData;
   };

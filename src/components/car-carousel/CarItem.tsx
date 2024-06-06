@@ -35,7 +35,11 @@ export const CarItem = ({ data, isCurrent }: Props) => {
 
   return (
     <div className="flex relative">
-      <img src={image} alt="" className="w-full h-[35rem] object-cover" />
+      <img
+        src={image.imageUrl}
+        alt=""
+        className="w-full h-[35rem] object-cover"
+      />
       <div className="absolute w-full h-full flex flex-col text-white">
         <div className="h-full relative">
           <div className="flex items-center gap-2 absolute top-[2rem] left-[1rem]">
