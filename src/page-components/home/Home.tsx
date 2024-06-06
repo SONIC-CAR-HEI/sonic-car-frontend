@@ -1,7 +1,7 @@
 import Img from 'next/image';
-import { Header } from './Header';
 import { SearchSection } from './search-section';
 import { ContactSection } from './ContactSection';
+import { Header } from '@/src/components/Header';
 import { CarCarousel } from '@/src/components/car-carousel';
 
 export const Home = () => {

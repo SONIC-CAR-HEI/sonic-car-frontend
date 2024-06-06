@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { Syne } from 'next/font/google';
-import { AppLogo } from '@/src/components/AppLogo';
+import { AppLogo } from './AppLogo';
 
 const syneFont = Syne({
   subsets: ['latin'],
