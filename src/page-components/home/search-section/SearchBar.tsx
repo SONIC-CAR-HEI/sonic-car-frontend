@@ -9,6 +9,7 @@ import {
   ThemeProvider,
 } from '@mui/material';
 import { SearchHookValue } from '@/src/hooks/useSearch';
+import { CarTypeOptions } from './CarTypeOptions';
 
 const darkTheme = createTheme({ palette: { mode: 'dark' } });
 
@@ -54,10 +55,10 @@ export const SearchBar = ({ hook }: Props) => {
             onChange={(v) => hook.handleMotorSelect(v.target.value as string)}
           >
             <MenuItem value="">None</MenuItem>
-            <MenuItem value={10}>Hybrid</MenuItem>
-            <MenuItem value={11}>Electric</MenuItem>
-            <MenuItem value={12}>Diesel</MenuItem>
-            <MenuItem value={13}>Essence</MenuItem>
+            <MenuItem value="HYBRID">Hybrid</MenuItem>
+            <MenuItem value="DIESEL">Diesel</MenuItem>
+            <MenuItem value="ELECTRIC">Electron</MenuItem>
+            <MenuItem value="GASOLINE">Gasoline</MenuItem>
           </Select>
         </FormControl>
 
@@ -68,11 +69,7 @@ export const SearchBar = ({ hook }: Props) => {
             labelId="select-type"
             onChange={(v) => hook.handleTypeSelect(v.target.value as string)}
           >
-            <MenuItem value="">None</MenuItem>
-            <MenuItem value={10}>Suv</MenuItem>
-            <MenuItem value={11}>4x4</MenuItem>
-            <MenuItem value={12}>Bus</MenuItem>
-            <MenuItem value={13}>Truck</MenuItem>
+            <CarTypeOptions />
           </Select>
         </FormControl>
       </ThemeProvider>

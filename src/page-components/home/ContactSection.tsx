@@ -1,6 +1,9 @@
 import { Facebook, Instagram, LinkedIn } from '@mui/icons-material';
+import { Syne } from 'next/font/google';
 import { DashHorizon } from '@/src/assets/fonts/dash-horizon';
 import { ContactForm } from './ContactForm';
+
+const syneFont = Syne({ weight: '800', subsets: ['latin'] });
 
 export const ContactSection = () => {
   return (
@@ -13,7 +16,9 @@ export const ContactSection = () => {
       </h2>
       <div className="w-full flex items-center justify-between">
         <div className="text-white w-[16rem] flex flex-col items-center justify-center">
-          <span className="text-xl">Follow us</span>
+          <span className={'text-xl font-bold ' + syneFont.className}>
+            Follow us
+          </span>
           <div className="flex gap-3 items-center">
             <Facebook fontSize="large" />
             <LinkedIn fontSize="large" />
@@ -23,7 +28,12 @@ export const ContactSection = () => {
         <ContactForm />
         <div className="w-[16rem]">
           <div className="mr-20 relative">
-            <p className="absolute right-0 text-white whitespace-nowrap text-2xl">
+            <p
+              className={
+                'absolute right-0 font-bold text-white whitespace-nowrap text-2xl ' +
+                syneFont.className
+              }
+            >
               Search, Buy, Drive !
             </p>
           </div>
