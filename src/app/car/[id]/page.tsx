@@ -34,7 +34,7 @@ export default function CarInfoPage({ params: { id } }: Props) {
           <header>
             <AppLogo />
           </header>
-          <ImageData />
+          <ImageData id={id} />
         </div>
         <InfoCase data={data} />
       </div>
