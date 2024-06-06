@@ -13,7 +13,7 @@ interface Props {
   searchParams: {};
 }
 
-export default function ({ params: { id } }: Props) {
+export default function CarInfoPage({ params: { id } }: Props) {
   const { data } = useQuery({
     queryKey: ['get-car-info', id],
     queryFn: async () => {

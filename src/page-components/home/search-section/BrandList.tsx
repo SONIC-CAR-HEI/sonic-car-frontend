@@ -18,6 +18,7 @@ export const BrandList = ({ onSelect }: Props) => {
     <div className="flex items-center gap-4">
       {data?.map((v) => (
         <div
+          key={v.id}
           onClick={() => onSelect(v)}
           className="py-1 px-3 flex flex-col gap-1 items-center justify-center hover:scale-110"
         >
