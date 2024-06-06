@@ -1,6 +1,7 @@
 import {
   Datagrid,
   DateField,
+  EditButton,
   EmailField,
   List,
   ReferenceField,
@@ -18,8 +19,9 @@ export const AppointmentList = () => (
       <EmailField source="email" />
       <TextField source="tel" />
       <DateField source="date" />
-      <ReferenceField source="carId" reference="car" />
-      <ReferenceField source="adminId" reference="admin" />
+      <ReferenceField source="carId" reference="car" link={'show'} />
+      <ReferenceField source="adminId" reference="admin" link={'show'} />
+      <EditButton label={'Edit'} />
     </Datagrid>
   </List>
 );

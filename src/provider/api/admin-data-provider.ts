@@ -18,14 +18,23 @@ export const dataProvider: DataProvider = {
   },
   // get a single record by id
   getOne: async (resource, params) => {
-    const baseApi = new BaseApi(resource, authorizationHeader);
+    const baseApi = new BaseApi(
+      resource === 'car-image' ? 'car-image/object' : resource,
+      authorizationHeader,
+    );
     const oneResource: any = await baseApi.get(params.id);
     return {
       data: oneResource,
     };
   },
   // get a list of records based on an array of ids
-  getMany: (resource, params) => Promise.resolve({ data: [] }),
+  getMany: async (resource, params) => {
+    const baseApi = new BaseApi(resource, authorizationHeader);
+    const manyResource: any = await baseApi.getManyById(params.ids);
+    return {
+      data: manyResource,
+    };
+  },
   // get the records referenced to another record, e.g. comments for a post
   getManyReference: (resource, params) => {
     console.log('Resource: ', resource);
@@ -65,5 +74,11 @@ export const dataProvider: DataProvider = {
     };
   },
   // delete a list of records based on an array of ids
-  deleteMany: (resource, params) => Promise.resolve({ data: [] }),
+  deleteMany: async (resource, params) => {
+    const baseApi = new BaseApi(resource, authorizationHeader);
+    const deleteManyResource: any = await baseApi.deleteManyById(params.ids);
+    return {
+      data: deleteManyResource,
+    };
+  },
 };

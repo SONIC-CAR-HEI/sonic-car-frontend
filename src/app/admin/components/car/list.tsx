@@ -21,8 +21,8 @@ export const CarList = () => (
       <NumberField source="power" />
       <BooleanField source="available" />
       <BooleanField source="fav" />
-      <ReferenceField source="typeId" reference="car-type" />
-      <ReferenceField source="brandId" reference="brand" />
+      <ReferenceField source="typeId" reference="car-type" link={'show'} />
+      <ReferenceField source="brandId" reference="brand" link={'show'} />
     </Datagrid>
   </List>
 );

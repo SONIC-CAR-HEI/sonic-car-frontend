@@ -50,7 +50,7 @@ export class BaseApi<
 
   async update(id: Id, data: Update): Promise<Data> {
     return (
-      await apiClient.put(this.resource_name + '/' + id, data, {
+      await apiClient.patch(this.resource_name + '/' + id, data, {
         headers: this.headers,
       })
     ).data;
@@ -60,6 +60,26 @@ export class BaseApi<
     return (
       await apiClient.delete(this.resource_name + '/' + id, {
         headers: this.headers,
+      })
+    ).data;
+  }
+
+  async getManyById(ids: Id[]): Promise<Data[]> {
+    return (
+      await apiClient.get(this.resource_name + '/ids', {
+        params: {
+          ids,
+        },
+      })
+    ).data;
+  }
+
+  async deleteManyById(ids: Id[]): Promise<Data[]> {
+    return (
+      await apiClient.delete(this.resource_name + '/ids', {
+        params: {
+          ids,
+        },
       })
     ).data;
   }
