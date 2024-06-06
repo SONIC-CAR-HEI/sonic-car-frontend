@@ -1,10 +1,7 @@
 'use client';
-import { notFound } from 'next/navigation';
-import { useQuery } from 'react-query';
 import { InfoCase } from './InfoCase';
-import { AppLogo } from '@/src/components/AppLogo';
-import { apiProvider } from '@/src/provider/api-provider';
 import { ImageData } from './ImageData';
+import { AppLogo } from '@/src/components/AppLogo';
 
 interface Props {
   params: {
@@ -14,29 +11,14 @@ interface Props {
 }
 
 export default function CarInfoPage({ params: { id } }: Props) {
-  const { data, isError, isLoading } = useQuery({
-    queryKey: ['get-car-info', id],
-    queryFn: async () => {
-      const carData = await apiProvider.car.get(id);
-      const carImages = await apiProvider.carImage.getCarImagesUrl(id);
-      const brand = await apiProvider.brand.get(carData.id);
-      const type = await apiProvider.carType.get(carData.id);
-      return { carData, carImages, brand, type };
-    },
-  });
-
-  if (isError || (!isLoading && !data)) return notFound();
-
   return (
     <div className="w-full h-screen flex flex-col">
+      <header className="sticky top-0 z-[1000] px-3 flex items-center bg-zinc-900 text-white text-lg">
+        <AppLogo />
+      </header>
       <div className="flex w-full h-full">
-        <div className="w-1/2 h-full">
-          <header>
-            <AppLogo />
-          </header>
-          <ImageData id={id} />
-        </div>
-        <InfoCase data={data} />
+        <ImageData id={id} />
+        <InfoCase id={id} />
       </div>
     </div>
   );

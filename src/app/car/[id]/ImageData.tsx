@@ -1,6 +1,11 @@
-import { apiProvider } from '@/src/provider/api-provider';
-import { useState } from 'react';
+'use client';
+import './style.css';
+import { PropsWithChildren } from 'react';
 import { useQuery } from 'react-query';
+import Slider, { Settings } from 'react-slick';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { apiProvider } from '@/src/provider/api-provider';
 
 interface Props {
   id: string;
@@ -9,46 +14,63 @@ interface Props {
 export const ImageData = ({ id }: Props) => {
   const { data } = useQuery({
     queryKey: ['get-car-images', id],
-    queryFn: () =>
-      apiProvider.carImage.getCarImagesUrl(id).then((v) => v.slice(0, 3)),
+    queryFn: () => apiProvider.carImage.getCarImagesUrl(id),
   });
-  const [images, setImages] = useState(data || []);
 
-  const swapOnClick = (index: number) => {
-    return () => {
-      setImages((p) => {
-        const copyImage = p.slice();
-        copyImage[index] = p[0];
-        copyImage[0] = p[index];
-        return copyImage;
-      });
-    };
+  const settings: Settings = {
+    infinite: true,
+    lazyLoad: 'anticipated',
+    speed: 600,
+    autoplay: true,
+    slidesToShow: 1,
+    centerMode: true,
+    centerPadding: '0',
+    nextArrow: (
+      <Button>
+        <ChevronRight size="2rem" />
+      </Button>
+    ),
+    prevArrow: (
+      <Button left>
+        <ChevronLeft size="2rem" />
+      </Button>
+    ),
   };
 
   return (
-    <div className="w-full p-3 flex flex-col gap-3">
-      <div className="w-full aspect-video bg-zinc-800 rounded-xl overflow-hidden">
-        <img
-          src={images[0]?.imageUrl}
-          alt=""
-          className="w-full h-full object-cover"
-        />
-      </div>
-      <div className="w-full flex items-center gap-3">
-        {images.slice(1).map((src, i) => (
-          <div
-            key={i}
-            onClick={swapOnClick(i + 1)}
-            className="w-full aspect-video bg-zinc-400 rounded-lg overflow-hidden transition-transform hover:scale-[1.04]"
-          >
-            <img
-              src={src.imageUrl}
-              alt=""
-              className="w-full h-full object-cover"
-            />
-          </div>
-        ))}
-      </div>
+    <div className="w-[75%] h-full flex-shrink flex p-5 relative">
+      {
+        <div className="w-full bg-zinc-900 h-full rounded-xl overflow-hidden relative">
+          <Slider {...settings} dots>
+            {data?.map((v) => (
+              <img
+                alt=""
+                key={v.id}
+                src={v.imageUrl}
+                className="w-full h-full object-cover"
+              />
+            ))}
+          </Slider>
+        </div>
+      }
     </div>
+  );
+};
+
+const Button = ({
+  children,
+  left,
+  ...rest
+}: PropsWithChildren<{ left?: boolean }>) => {
+  return (
+    <button
+      {...rest}
+      className={
+        'absolute top-[50%] z-[10] text-white ' +
+        (left ? 'left-[1rem]' : 'right-[1rem]')
+      }
+    >
+      {children}
+    </button>
   );
 };
