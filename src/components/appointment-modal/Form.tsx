@@ -1,0 +1,112 @@
+import { z } from 'zod';
+import { PropsWithChildren, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { Alert, Snackbar, TextField } from '@mui/material';
+import { DateTimeField } from '@mui/x-date-pickers';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { apiProvider } from '@/src/provider/api-provider';
+
+interface Props {
+  onSent(): void;
+  carId: string;
+}
+
+const schema = z.object({
+  firstName: z.string({ required_error: 'required value' }),
+  lastName: z.string({ required_error: 'required value' }),
+  message: z.string({ required_error: 'required value' }),
+  email: z.string().email(),
+  tel: z.string({ required_error: 'required value' }),
+  date: z.string().datetime(),
+});
+
+export const Form = ({ children, carId, onSent }: PropsWithChildren<Props>) => {
+  const [open, setOpen] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+  } = useForm<z.infer<typeof schema>>({
+    resolver: zodResolver(schema),
+  });
+
+  const watchError = (label: string, key: keyof typeof errors) => {
+    return {
+      error: !!errors[key],
+      label: errors[key]?.message || label,
+    };
+  };
+
+  const handleDataToSend = async (data: z.infer<typeof schema>) => {
+    try {
+      const response = await apiProvider.appointment.create({
+        carId,
+        date: new Date(data.date),
+        email: data.email,
+        tel: data.tel,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        message: data.message,
+      });
+      if (response.id) onSent();
+    } catch (e) {
+      setOpen(true);
+    }
+  };
+
+  const handleClose = () => setOpen(false);
+
+  const registerDate = () => {
+    const { onChange, ...r } = register('date');
+    return r;
+  };
+
+  return (
+    <form onSubmit={handleSubmit(handleDataToSend)}>
+      <div className="pt-5 flex flex-col gap-4 relative">
+        <div className="flex items-center gap-2">
+          <TextField
+            {...register('firstName', { required: 'required value' })}
+            {...watchError('Firstname', 'firstName')}
+          />
+          <TextField
+            {...watchError('Lastname', 'lastName')}
+            {...register('lastName', { required: 'required value' })}
+          />
+        </div>
+        <TextField {...watchError('Email', 'email')} {...register('email')} />
+        <TextField
+          {...watchError('Phone', 'tel')}
+          {...register('tel', { required: 'required value' })}
+        />
+        <DateTimeField
+          format="y/MMMM/dd hh:mm"
+          {...watchError('Availability date', 'date')}
+          {...registerDate()}
+          onChange={(v) => setValue('date', v?.toISOString() || '')}
+        />
+        <TextField
+          multiline
+          {...register('message', { required: 'required value' })}
+          inputProps={{
+            sx: { height: '14rem', maxHeight: '14rem' },
+            style: { height: '14rem', maxHeight: '14rem' },
+          }}
+          {...watchError('Message', 'message')}
+        />
+      </div>
+      {children}
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert
+          variant="filled"
+          severity="error"
+          onClose={handleClose}
+          sx={{ width: '100%' }}
+        >
+          Could not send the form
+        </Alert>
+      </Snackbar>
+    </form>
+  );
+};

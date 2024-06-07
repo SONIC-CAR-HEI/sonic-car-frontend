@@ -21,9 +21,25 @@ export interface CarData {
 
 export type CarCreatePayload = Omit<CarData, 'id'>;
 
+interface ParamSearch {
+  query?: string;
+  minPrice?: number;
+  maxPrice?: number;
+  motor?: string;
+  type?: string;
+  brand?: string;
+}
+
 export class Car extends BaseApi<CarData['id'], CarData, CarCreatePayload> {
   constructor() {
     super('car');
+  }
+
+  async search(params: ParamSearch): Promise<CarData[]> {
+    const queries = new URLSearchParams(params as Record<string, string>);
+    return (
+      await apiClient.get(this.resource_name + '/search?' + queries.toString())
+    ).data;
   }
 }
 
@@ -80,7 +96,7 @@ export class CarImage extends BaseApi<
     throw new Error('not implemented');
   }
 
-  async getCarImagesUrl(carId: CarData['id']): Promise<string[]> {
+  async getCarImagesUrl(carId: CarData['id']): Promise<CarImageData[]> {
     return (await apiClient.get(this.resource_name + '/' + carId)).data;
   }
 }

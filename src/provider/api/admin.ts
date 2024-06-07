@@ -26,7 +26,7 @@ export class Admin extends BaseApi<AdminData['id'], AdminData, AdminPayload> {
   async all(): Promise<AdminData[]> {
     return (
       await apiClient.get(this.resource_name, {
-        headers: { Authorization: this.currentBearer },
+        headers: { Authorization: 'Bearer ' + this.currentBearer },
       })
     ).data;
   }
