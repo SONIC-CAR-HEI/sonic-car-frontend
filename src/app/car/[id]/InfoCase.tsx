@@ -38,14 +38,21 @@ export const InfoCase = ({ id }: Props) => {
           <h2 className={syneFont.className + ' text-xl font-extrabold'}>
             {data?.carData.name || 'Name'}
           </h2>
-          {!data?.carData.available ? (
+          {data?.carData.available ? (
             <Chip
               label="Available"
               size="small"
               color="success"
               className="text-sm font-bold"
             />
-          ) : null}
+          ) : (
+            <Chip
+              label="Out of stock"
+              size="small"
+              color="error"
+              className="text-sm font-bold"
+            />
+          )}
         </div>
         <div className="py-5 flex flex-col gap-2">
           <table>
@@ -54,13 +61,12 @@ export const InfoCase = ({ id }: Props) => {
               {data?.carData.brandId && (
                 <BrandLine id={data?.carData.brandId} />
               )}
-              <Line label="Power" value={data?.carData.power} />
+              <Line label="Power" value={data?.carData.power + ' hp'} />
               <Line
                 label="Engine"
                 value={
-                  data?.carData.engineType[0] ||
-                  '' + data?.carData.engineType.slice(1).toLowerCase() ||
-                  ''
+                  (data?.carData.engineType[0] || '') +
+                  (data?.carData.engineType.slice(1).toLowerCase() || '')
                 }
               />
               <Line label="Seats" value={data?.carData.placeNumber} />
@@ -91,7 +97,9 @@ export const InfoCase = ({ id }: Props) => {
               <span
                 className={quicksandFont.className + ' text-black text-bold'}
               >
-                Buy for {(data?.carData.price.toLocaleString() || 0).toLocaleString()} Ar
+                Buy for{' '}
+                {(data?.carData.price.toLocaleString() || 0).toLocaleString()}{' '}
+                Ar
               </span>
             </Button>
           </AppointmentModal>
@@ -121,13 +129,13 @@ const Line = ({
   value: string | number | undefined;
 }) => {
   return (
-    <div className="flex items-center gap-1">
-      <span className={montserratFont.className + ' font-extrabold text-xl'}>
-        {label}:
-      </span>
-      <span className={quicksandFont + ' font-semibold text-lg'}>
+    <tr>
+      <td className={montserratFont.className + ' font-extrabold text-xl'}>
+        {label}
+      </td>
+      <td className={quicksandFont + ' font-semibold text-lg'}>
         {value || 'unknown'}
-      </span>
-    </div>
+      </td>
+    </tr>
   );
 };
