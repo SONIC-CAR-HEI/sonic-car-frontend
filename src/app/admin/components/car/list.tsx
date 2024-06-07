@@ -1,6 +1,8 @@
+import { CarData } from 'provider/api/car';
 import {
   BooleanField,
   Datagrid,
+  FunctionField,
   List,
   NumberField,
   ReferenceField,
@@ -13,7 +15,11 @@ export const CarList = () => (
       <TextField source="id" />
       <TextField source="model" />
       <TextField source="name" />
-      <TextField source="description" />
+      <FunctionField
+        source={'description'}
+        label={'Description'}
+        render={(record: CarData) => `${record.description.slice(0, 70)}...`}
+      />
       <NumberField source="price" />
       <TextField source="engineType" />
       <NumberField source="placeNumber" />
