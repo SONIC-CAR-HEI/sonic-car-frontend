@@ -1,9 +1,9 @@
 'use client';
+import { sendContact } from '@/src/provider/mailer';
 import { z } from 'zod';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Alert, Button, Snackbar, TextField } from '@mui/material';
-import { contact } from '@/src/provider/api/contact';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 const schema = z.object({
@@ -15,6 +15,7 @@ const schema = z.object({
 type FormInput = z.infer<typeof schema>;
 
 export const ContactForm = () => {
+  const form = useRef<HTMLFormElement>(null);
   const [cantSend, cannotSend] = useState(false);
   const {
     register,
@@ -27,7 +28,7 @@ export const ContactForm = () => {
 
   const handleDataToSend = async (data: FormInput) => {
     try {
-      await contact(data);
+      await sendContact(form.current as HTMLFormElement);
       reset();
     } catch (e) {
       cannotSend(true);
