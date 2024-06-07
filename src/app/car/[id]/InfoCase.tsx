@@ -70,7 +70,7 @@ export const InfoCase = ({ id }: Props) => {
               <span
                 className={quicksandFont.className + ' text-black text-bold'}
               >
-                Buy for {data?.carData.price || '0.00'} Ar
+                Buy for {(data?.carData.price || 0).toLocaleString()} Ar
               </span>
             </Button>
           </AppointmentModal>

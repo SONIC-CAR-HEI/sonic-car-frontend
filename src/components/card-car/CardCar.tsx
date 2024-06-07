@@ -38,7 +38,7 @@ export const CardCar = ({ car = {} as CarData }: Props) => {
             {car.name}
           </h2>
           <Chip
-            label={(car.price || 0) + ' Ar'}
+            label={(car.price || 0).toLocaleString() + ' Ar'}
             className="font-semibold text-white"
           />
         </div>
