@@ -63,7 +63,7 @@ export const CarItem = ({ data, isCurrent }: Props) => {
                 {data.name}
               </h2>
               <span className="text-zinc-300 bg-zinc-600 bg-opacity-60 rounded-xl px-1 py-[0.2rem]">
-                {data.price} Ar
+                {data.price.toLocaleString()} Ar
               </span>
             </div>
             <h3

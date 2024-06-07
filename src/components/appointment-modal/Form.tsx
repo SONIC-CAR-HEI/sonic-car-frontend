@@ -1,5 +1,6 @@
+import { sendAppointment } from '@/src/provider/mailer';
 import { z } from 'zod';
-import { PropsWithChildren, useState } from 'react';
+import { PropsWithChildren, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Alert, Snackbar, TextField } from '@mui/material';
 import { DateTimeField } from '@mui/x-date-pickers';
@@ -13,7 +14,7 @@ interface Props {
 
 const schema = z.object({
   firstName: z.string({ required_error: 'required value' }),
-  lastName: z.string({ required_error: 'required value' }),
+  from_name: z.string({ required_error: 'required value' }),
   message: z.string({ required_error: 'required value' }),
   email: z.string().email(),
   tel: z.string({ required_error: 'required value' }),
@@ -21,6 +22,7 @@ const schema = z.object({
 });
 
 export const Form = ({ children, carId, onSent }: PropsWithChildren<Props>) => {
+  const formRef = useRef<HTMLFormElement>(null);
   const [open, setOpen] = useState(false);
   const {
     register,
@@ -40,14 +42,15 @@ export const Form = ({ children, carId, onSent }: PropsWithChildren<Props>) => {
 
   const handleDataToSend = async (data: z.infer<typeof schema>) => {
     try {
+      await sendAppointment(formRef.current as HTMLFormElement);
       const response = await apiProvider.appointment.create({
         carId,
         date: new Date(data.date),
-        email: data.email,
+        message: data.message,
         tel: data.tel,
         firstName: data.firstName,
-        lastName: data.lastName,
-        message: data.message,
+        lastName: data.from_name,
+        email: data.email,
       });
       if (response.id) onSent();
     } catch (e) {
@@ -63,16 +66,17 @@ export const Form = ({ children, carId, onSent }: PropsWithChildren<Props>) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(handleDataToSend)}>
+    <form ref={formRef} onSubmit={handleSubmit(handleDataToSend)}>
       <div className="pt-5 flex flex-col gap-4 relative">
+        <input type="text" name="car_id" value={carId} disabled hidden />
         <div className="flex items-center gap-2">
           <TextField
             {...register('firstName', { required: 'required value' })}
             {...watchError('Firstname', 'firstName')}
           />
           <TextField
-            {...watchError('Lastname', 'lastName')}
-            {...register('lastName', { required: 'required value' })}
+            {...watchError('Lastname', 'from_name')}
+            {...register('from_name', { required: 'required value' })}
           />
         </div>
         <TextField {...watchError('Email', 'email')} {...register('email')} />
