@@ -46,6 +46,7 @@ export const ContactForm = () => {
 
   return (
     <form
+      ref={form}
       onSubmit={handleSubmit(handleDataToSend)}
       className="py-4 flex flex-col gap-4 w-[25rem] bg-zinc-100 p-2 rounded-xl"
     >
